@@ -5,6 +5,7 @@ import Head from "next/head";
  "https://192.168.201.27/api/v1/enquiry/accountInfo/0070005099";
 
 export async function getServerSideProps() {
+  process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
   const res = await fetch(accountInfo, {
     headers: {
        Authorization :

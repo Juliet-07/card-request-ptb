@@ -20,5 +20,9 @@
     "eslint-config-next": "12.2.1",
     "postcss": "^8.4.14",
     "tailwindcss": "^3.1.5"
+  },
+  "env": {
+    "name": "NODE_TLS_REJECT_UNAUTHORIZED",
+    "value": "0"
   }
 }
