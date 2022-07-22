@@ -1,7 +1,44 @@
+import React, { useState } from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
-import Link from "next/link";
 
-export default function Home() {
+const Initiate = () => {
+  const router = useRouter();
+  const [number, setNumber] = useState("");
+  const accountInfo = `https://192.168.201.27/api/v1/enquiry/accountInfo/${number}`;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log({ name, value });
+    setNumber(`${value}`);
+    console.log({ number });
+  };
+  const getAccountDetails = async (e) => {
+    e.preventDefault();
+    router.push({
+      pathname: "/details",
+      query: {
+        accountNumber: number,
+      },
+    });
+    // process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+    // const response = await fetch(accountInfo, {
+    //   headers: {
+    //     Authorization:
+    //       "Bearer 14072022E3C40F40C5B90911E0530FC9A8C0434AE3C40F40C5BA0911E0530FC9A8C0434AE3C40F40C5BB0911E0530FC9A8C0434AE3C40F40C5BC0911E0530FC9A8C0434AE3C40F40C5BD0911E0530FC9A8C0434A",
+    //     "Content-Type": "application/json",
+    //     Accept: "*/*",
+    //   },
+    // })
+    //   .then((response) => {
+    //     console.log({ response });
+    //     return {
+    //       props: {
+    //         res: response.json(),
+    //       },
+    //     };
+    //   })
+    //   .catch((e) => console.error(e));
+  };
   return (
     <div className="mt-6">
       <Head>
@@ -25,19 +62,27 @@ export default function Home() {
               </label>
               <input
                 type="text"
+                name="accountNo"
+                value={number}
+                onChange={handleChange}
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-red-400 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
             <div className="mt-6">
-              <Link href="/details">
-                <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-red-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">
-                  Submit
-                </button>
-              </Link>
+              {/* <Link href="/details"> */}
+              <button
+                onClick={getAccountDetails}
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-red-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
+              >
+                Submit
+              </button>
+              {/* </Link> */}
             </div>
           </form>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Initiate;

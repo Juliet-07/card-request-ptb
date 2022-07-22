@@ -1,28 +1,52 @@
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
-// const accountInfo = "https://rickandmortyapi.com/api/character/";
- const accountInfo =
- "https://192.168.201.27/api/v1/enquiry/accountInfo/0070005099";
+// const accountInfo =
+//   "https://192.168.201.27/api/v1/enquiry/accountInfo/0070005099";
 
-export async function getServerSideProps() {
-  process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
-  const res = await fetch(accountInfo, {
-    headers: {
-       Authorization :
-         "Bearer 14072022E3C40F40C5B90911E0530FC9A8C0434AE3C40F40C5BA0911E0530FC9A8C0434AE3C40F40C5BB0911E0530FC9A8C0434AE3C40F40C5BC0911E0530FC9A8C0434AE3C40F40C5BD0911E0530FC9A8C0434A",
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  });
-  const data = await res.json();
-  return {
-    props: {
-      data,
-    },
+// export async function getServerSideProps() {
+//   process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+//   const response = await fetch(accountInfo, {
+//     headers: {
+//       Authorization:
+//         "Bearer 14072022E3C40F40C5B90911E0530FC9A8C0434AE3C40F40C5BA0911E0530FC9A8C0434AE3C40F40C5BB0911E0530FC9A8C0434AE3C40F40C5BC0911E0530FC9A8C0434AE3C40F40C5BD0911E0530FC9A8C0434A",
+//       "Content-Type": "application/json",
+//       Accept: "application/json",
+//     },
+//   });
+//   const res = await response.json();
+//   return {
+//     props: {
+//       res,
+//     },
+//   };
+// }
+const Details = () => {
+  const router = useRouter();
+  console.log(router.query);
+  const accountNumber = router.query?.accountNumber;
+  const accountInfo = `https://192.168.201.27/api/v1/enquiry/accountInfo/${accountNumber}`;
+  const getAccountDetails = async () => {
+    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+    const response = await fetch(accountInfo, {
+      headers: {
+        Authorization:
+          "Bearer 14072022E3C40F40C5B90911E0530FC9A8C0434AE3C40F40C5BA0911E0530FC9A8C0434AE3C40F40C5BB0911E0530FC9A8C0434AE3C40F40C5BC0911E0530FC9A8C0434AE3C40F40C5BD0911E0530FC9A8C0434A",
+        "Content-Type": "application/json",
+        Accept: "*/*",
+      },
+    })
+      .then((response) => {
+        console.log({ response });
+        return {
+          props: {
+            res: response.json(),
+          },
+        };
+      })
+      .catch((e) => console.error(e));
   };
-}
-const Details = ({ data }) => {
-  console.log("data", data);
   return (
     <div className="mt-6">
       <Head>
@@ -34,6 +58,8 @@ const Details = ({ data }) => {
         <h1 className="text-3xl font-bold text-center text-red-700">
           PTB CARD REQUEST PLATFORM
         </h1>
+        {/* <h5>{}</h5> */}
+        {/* <h5>{user ? user.customerName : "Loading..."}</h5> */}
         <div className="w-full p-6 m-auto bg-white border-t border-red-600 rounded shadow-lg shadow-red-800/50 lg:max-w-md">
           <h1 className=" font-semibold text-center text-red-800">
             Customer Details
@@ -45,16 +71,42 @@ const Details = ({ data }) => {
               </label>
               <input
                 type="text"
-                placeholder="preRendered"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-red-400 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                value={accountNumber ? accountNumber : ""}
+              />
+            </div>
+            <div className="mt-4">
+              <label
+                htmlFor="accountType"
+                className="block text-sm text-gray-800"
+              >
+                Account Type
+              </label>
+              <input
+                type="text"
+                // value={data.customerName}
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-red-400 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
+
             <div className="mt-4">
               <label htmlFor="account" className="block text-sm text-gray-800">
                 Name
               </label>
               <input
+                name="customerName"
                 type="text"
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-red-400 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                // value={user ? user.customerName : "null"}
+              />
+            </div>
+            <div className="mt-4">
+              <label htmlFor="address" className="block text-sm text-gray-800">
+                Address
+              </label>
+              <input
+                type="text"
+                placeholder="preRendered"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-md focus:border-red-400 focus:ring-red-300 focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
@@ -95,7 +147,10 @@ const Details = ({ data }) => {
               />
             </div>
             <div className="mt-6">
-              <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-red-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">
+              <button
+                // onClick={getAccountDetails}
+                className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-red-700 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
+              >
                 Submit
               </button>
             </div>
