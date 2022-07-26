@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import axios from "axios";
 
+// const accountInfo =
+//   "https://192.168.201.27/api/v1/enquiry/accountInfo/0070005099";
+// export async function getServerSideProps() {
+//   process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+//   const response = await fetch(accountInfo, {
+//     headers: {
+//       Authorization:
+//         "Bearer 14072022E3C40F40C5B90911E0530FC9A8C0434AE3C40F40C5BA0911E0530FC9A8C0434AE3C40F40C5BB0911E0530FC9A8C0434AE3C40F40C5BC0911E0530FC9A8C0434AE3C40F40C5BD0911E0530FC9A8C0434A",
+//       "Content-Type": "application/json",
+//     },
+//   });
+//   const detail = await response.json();
+//   return {
+//     props: {
+//       detail,
+//     },
+//   };
+// }
 const Initiate = () => {
   const router = useRouter();
   const [number, setNumber] = useState("");
-  const accountInfo = `https://192.168.201.27/api/v1/enquiry/accountInfo/${number}`;
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log({ name, value });
@@ -20,25 +38,46 @@ const Initiate = () => {
         accountNumber: number,
       },
     });
-    // process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
-    // const response = await fetch(accountInfo, {
-    //   headers: {
-    //     Authorization:
-    //       "Bearer 14072022E3C40F40C5B90911E0530FC9A8C0434AE3C40F40C5BA0911E0530FC9A8C0434AE3C40F40C5BB0911E0530FC9A8C0434AE3C40F40C5BC0911E0530FC9A8C0434AE3C40F40C5BD0911E0530FC9A8C0434A",
-    //     "Content-Type": "application/json",
-    //     Accept: "*/*",
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log({ response });
-    //     return {
-    //       props: {
-    //         res: response.json(),
-    //       },
-    //     };
-    //   })
-    //   .catch((e) => console.error(e));
   };
+  // const accountInfo = `https://192.168.201.27/api/v1/enquiry/accountInfo/${number}`;
+  // useEffect(() => {
+  //   fetchAccountDetails();
+  //   console.log("details", fetchAccountDetails);
+  // }, [result]);
+  // useEffect(() => {
+  //   console.log(result);
+  // }, [result]);
+
+  // const fetchAccountDetails = async () => {
+  //   console.log("method clicked");
+  //   process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+  //   const response = await axios.get(accountInfo, {
+  //     headers: {
+  //       Authorization:
+  //         "Bearer 14072022E3C40F40C5B90911E0530FC9A8C0434AE3C40F40C5BA0911E0530FC9A8C0434AE3C40F40C5BB0911E0530FC9A8C0434AE3C40F40C5BC0911E0530FC9A8C0434AE3C40F40C5BD0911E0530FC9A8C0434A",
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   setresult(response.data);
+  //   console.log("response", response);
+  // };
+  // fetchAccountDetails();
+  // const fetchAccountDetails = () => {
+  //   try {
+  //     process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+  //     axios.get(accountInfo, {
+  //       headers: {
+  //         Authorization:
+  //           "Bearer 14072022E3C40F40C5B90911E0530FC9A8C0434AE3C40F40C5BA0911E0530FC9A8C0434AE3C40F40C5BB0911E0530FC9A8C0434AE3C40F40C5BC0911E0530FC9A8C0434AE3C40F40C5BD0911E0530FC9A8C0434A",
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((json) => console.log(json));
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  // };
   return (
     <div className="mt-6">
       <Head>
